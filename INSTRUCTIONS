@@ -1,0 +1,29 @@
+DOWNLOAD PORT-TREE
+	portsnap fetch extract
+
+INSTALL THEM MANUALLY
+	/usr/ports/devel/git
+	/usr/ports/databases/postgresql90-client
+	/usr/ports/sysutils/cdrtools
+	/usr/ports/sysutils/fastest_cvsup
+	/usr/ports/sysutils/screen
+
+ARRENGE DIRECTORIES
+	mkdir -p /home/nuclewall
+	git clone git://github.com/3f69da0a58736aa509f8437d50fca098/ca0987_tools.git tools
+	git clone git://github.com/3f69da0a58736aa509f8437d50fca098/ca0987_bsdinstaller.git installer
+	git clone git://github.com/3f69da0a58736aa509f8437d50fca098/ca0987_freesbie2.git freesbie2
+
+DOWNLOAD SOURCES AND APPLY PATCHES
+	csup -h cvsup14.freebsd.org RELENG_8_1-supfile
+	apply_kernel_patches.sh
+	rebuild_bsdinstaller.sh
+
+MOVE BUILDING OPTIONS TO ACTUAL PATH
+	rm -rf /var/db/ports && cp -R options /var/db/ports
+
+BUILD PORTS
+	build_pfPorts.sh (It takes a long time. Be sure that all ports are builded correctly when finish.)
+
+BUILD ISO
+	build_iso.sh
