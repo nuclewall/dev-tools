@@ -1606,28 +1606,26 @@ checkout_pfSense_git() {
 	echo -n ">>> "
 
 	if [ "${PFSENSE_WITH_FULL_GIT_CHECKOUT}" != "" ]; then
-		echo ">>> Clearing ${GIT_REPO_DIR}/nucle_repo and ${GIT_REPO_DIR}/nucle_gui..."
-		if [ -d ${GIT_REPO_DIR}/nucle_repo ]; then
-			rm -rf ${GIT_REPO_DIR}/nucle_repo
+		echo ">>> Clearing ${GIT_REPO_DIR}/src and ${GIT_REPO_DIR}/nucle_gui..."
+		if [ -d ${GIT_REPO_DIR}/src ]; then
+			rm -rf ${GIT_REPO_DIR}/src
 		fi
-		if [ -d ${GIT_REPO_DIR}/pfSense ]; then
-			rm -rf ${GIT_REPO_DIR}/pfSense
-		fi
+
 	fi
 
-	mkdir -p ${GIT_REPO_DIR}/nucle_repo
+	mkdir -p ${GIT_REPO_DIR}/src
 	if [ "${PFSENSETAG}" = "MASTER" ] \
             || [ "${PFSENSETAG}" = 'HEAD' ]; then
         	echo -n 'Checking out tag master...'
         	BRANCH=master
-        	(cd ${GIT_REPO_DIR}/nucle_repo && git checkout master) \
+        	(cd ${GIT_REPO_DIR}/src && git checkout master) \
 			2>&1 | egrep -wi '(^>>>|error)'
 	else
 		echo -n "Checking out tag ${PFSENSETAG}..."
 		BRANCH="${PFSENSETAG}"
-		branch_exists=`(cd ${GIT_REPO_DIR}/nucle_repo \
+		branch_exists=`(cd ${GIT_REPO_DIR}/src \
 			&& git branch | grep "${PFSENSETAG}\$")`
-		tag_exists=`(cd ${GIT_REPO_DIR}/nucle_repo \
+		tag_exists=`(cd ${GIT_REPO_DIR}/src \
 			&& git tag -l | grep "^${PFSENSETAG}\$")`
 
 		# If we are using a git tag, don't specify origin/ in the remote.
@@ -1636,11 +1634,11 @@ checkout_pfSense_git() {
 		fi
 
 		if [ -z "${branch_exists}" ]; then
-			(cd ${GIT_REPO_DIR}/nucle_repo \
+			(cd ${GIT_REPO_DIR}/src \
 				&& git checkout -b "${PFSENSETAG}" "${ORIGIN}${PFSENSETAG}") \
 				2>&1 | egrep -wi '(^>>>|error)'
 		else
-			(cd ${GIT_REPO_DIR}/nucle_repo \
+			(cd ${GIT_REPO_DIR}/src \
 				&& git checkout "${PFSENSETAG}") 2>&1 \
 				| egrep -wi '(^>>>|error)'
 		fi
@@ -1648,12 +1646,12 @@ checkout_pfSense_git() {
 	echo 'Done!'
 
 	echo -n '>>> Making sure we are in the right branch...'
-	selected_branch=`cd ${GIT_REPO_DIR}/nucle_repo && \
+	selected_branch=`cd ${GIT_REPO_DIR}/src && \
 		git branch | grep '^\*' | cut -d' ' -f2`
 	if [ "${selected_branch}" = "${BRANCH}" ]; then
 		echo " [OK] (${BRANCH})"
 	else
-		tag_exists=`(cd ${GIT_REPO_DIR}/nucle_repo \
+		tag_exists=`(cd ${GIT_REPO_DIR}/src \
 			&& git tag -l | grep "^${PFSENSETAG}\$")`
 
 		if [ -z "${tag_exists}" ] || [ "${selected_branch}" != "(no" ]; then
@@ -1665,7 +1663,7 @@ checkout_pfSense_git() {
 
 	echo -n ">>> Creating tarball of checked out contents..."
 	mkdir -p $CVS_CO_DIR
-	cd ${GIT_REPO_DIR}/nucle_repo && tar czpf /tmp/pfSense.tgz .
+	cd ${GIT_REPO_DIR}/src && tar czpf /tmp/pfSense.tgz .
 	cd $CVS_CO_DIR && tar xzpf /tmp/pfSense.tgz
 	rm /tmp/pfSense.tgz
 	rm -rf ${CVS_CO_DIR}/.git
@@ -1790,14 +1788,14 @@ update_cvs_depot() {
 			echo ">>> Creating ${GIT_REPO_DIR}"
 			mkdir -p ${GIT_REPO_DIR}
 		fi
-		if [ ! -d "${GIT_REPO_DIR}/nucle_repo" ]; then
+		if [ ! -d "${GIT_REPO_DIR}/src" ]; then
 			echo -n ">>> Cloning ${GIT_REPO} / ${PFSENSETAG}..."
-			(cd ${GIT_REPO_DIR} && /usr/local/bin/git clone ${GIT_REPO} nucle_repo) 2>&1 | egrep -B3 -A3 -wi '(error)'
-			if [ -d "${GIT_REPO_DIR}/nucle_repo" ]; then
-				if [ ! -d "${GIT_REPO_DIR}/nucle_repo/conf.default" ]; then
+			(cd ${GIT_REPO_DIR} && /usr/local/bin/git clone ${GIT_REPO} src) 2>&1 | egrep -B3 -A3 -wi '(error)'
+			if [ -d "${GIT_REPO_DIR}/src" ]; then
+				if [ ! -d "${GIT_REPO_DIR}/src/conf.default" ]; then
 					echo
 					echo "!!!! An error occured while checking out pfSense"
-					echo "     Could not locate ${GIT_REPO_DIR}/nucle_repo/conf.default"
+					echo "     Could not locate ${GIT_REPO_DIR}/src/conf.default"
 					echo
 					print_error_pfS
 					kill $$
@@ -1805,7 +1803,7 @@ update_cvs_depot() {
 			else
 				echo
 				echo "!!!! An error occured while checking out pfSense"
-				echo "     Could not locate ${GIT_REPO_DIR}/nucle_repo"
+				echo "     Could not locate ${GIT_REPO_DIR}/src"
 				echo
 				print_error_pfS
 				kill $$
@@ -3128,9 +3126,9 @@ pfSense_clean_obj_dir() {
 	(cd ${CURRENTDIR} && rm -rf ${MAKEOBJDIRPREFIX}/.done*)
 	echo -n "."
 	rm -rf $KERNEL_BUILD_PATH/*
-	if [ -d "${GIT_REPO_DIR}/nucle_repo" ]; then
+	if [ -d "${GIT_REPO_DIR}/src" ]; then
 		echo -n "."
-		rm -rf "${GIT_REPO_DIR}/nucle_repo"
+		rm -rf "${GIT_REPO_DIR}/src"
 	fi
 	echo "Done!"
 	echo -n ">>> Ensuring $SRCDIR is clean..."
@@ -3439,7 +3437,7 @@ setup_deviso_specific_items() {
 	echo -n ">>> Setting up DevISO specific bits... Please wait (this will take a while!)..."
 	DEVROOT="$PFSENSEBASEDIR/home/pfsense"
 	mkdir -p $DEVROOT
-	mkdir -p $PFSENSEBASEDIR/home/nuclewall/nucle_repo
+	mkdir -p $PFSENSEBASEDIR/home/nuclewall/src
 	mkdir -p $PFSENSEBASEDIR/home/nuclewall/installer
 	mkdir -p $PFSENSEBASEDIR/usr/src
 	echo "WITHOUT_X11=yo" >> $PFSENSEBASEDIR/etc/make.conf

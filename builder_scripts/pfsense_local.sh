@@ -229,7 +229,7 @@ export CUSTOM_REMOVE_LIST=${CUSTOM_REMOVE_LIST:-"${BUILDER_SCRIPTS}/remove.list.
 # GIT pfSense, BSDInstaller & FreeSBIE GIT repo settings
 export USE_GIT=${USE_GIT:-"yo"}
 export GIT_REPO=${GIT_REPO:-"git@github.com:nuclewall/nuclewall.git"}
-export GIT_REPO_DIR="${BASE_DIR}/nucle_repo"
+export GIT_REPO_DIR="${BASE_DIR}"
 export GIT_REPO_FREESBIE2=${GIT_REPO_FREESBIE2:-"git@github.com:nuclewall/freesbie2.git"}
 export GIT_REPO_TOOLS=${GIT_TOOLS_REPO:-"git@github.com:nuclewall/dev-tools.git tools"}
 
