@@ -1,4 +1,4 @@
-#!/bin/sh
+i#!/bin/sh
 #
 # Common functions to be used by build scripts
 #
@@ -218,10 +218,10 @@ mkdir -p $CLONEDIR/home $CLONEDIR/etc
 # Finalize iso
 echo ">>> Finalizing iso..."
 (freesbie_make iso) >/dev/null 2>&1
-#echo ">>> Creating memstick..."
-#(create_memstick_image) >/dev/null 2>&1
-#echo ">>> Creating serial memstick..."
-#(create_memstick_serial_image) >/dev/null 2>&1
+echo ">>> Creating memstick..."
+(create_memstick_image) >/dev/null 2>&1
+echo ">>> Creating serial memstick..."
+(create_memstick_serial_image) >/dev/null 2>&1
 
 # Check for zero sized files.  loader.conf is one of the culprits.
 check_for_zero_size_files
