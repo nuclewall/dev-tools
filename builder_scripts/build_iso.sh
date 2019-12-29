@@ -5,17 +5,17 @@ i#!/bin/sh
 #  build_iso.sh
 #  Copyright (C) 2004-2009 Scott Ullrich
 #  All rights reserved.
-#  
+#
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted provided that the following conditions are met:
-#  
+#
 #  1. Redistributions of source code must retain the above copyright notice,
 #     this list of conditions and the following disclaimer.
-#  
+#
 #  2. Redistributions in binary form must reproduce the above copyright
 #     notice, this list of conditions and the following disclaimer in the
 #     documentation and/or other materials provided with the distribution.
-#  
+#
 #  THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 #  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 #  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -28,7 +28,7 @@ i#!/bin/sh
 #  POSSIBILITY OF SUCH DAMAGE.
 #
 # Crank up error reporting, debugging.
-#  set -e 
+#  set -e
 #  set -x
 
 # Suck in local vars
@@ -76,9 +76,9 @@ check_for_forced_pfPorts_build
 freesbie_clean_each_run
 
 # Allow old CVS_CO_DIR to be deleted later
-if [ -d $CVS_CO_DIR ]; then 
+if [ -d $CVS_CO_DIR ]; then
 	chflags -R noschg $CVS_CO_DIR
-fi 
+fi
 
 # Output build flags
 print_flags
@@ -108,7 +108,7 @@ build_all_kernels
 if [ -f ${MAKEOBJDIRPREFIX}/usr/home/pfsense/freesbie2/.tmp_kernelbuild ]; then
 	echo "Something has gone wrong!  Press ENTER to view log file."
 	read ans
-	more ${MAKEOBJDIRPREFIX}/usr/home/pfsense/freesbie2/.tmp_kernelbuild 
+	more ${MAKEOBJDIRPREFIX}/usr/home/pfsense/freesbie2/.tmp_kernelbuild
 	exit
 fi
 
@@ -142,7 +142,7 @@ set -e
 # Install packages needed for livecd
 install_pkg_install_ports
 
-echo ">>> Installing packages: " 
+echo ">>> Installing packages: "
 cat $PFSPKGFILE
 
 # Add installer bits
@@ -220,8 +220,6 @@ echo ">>> Finalizing iso..."
 (freesbie_make iso) >/dev/null 2>&1
 echo ">>> Creating memstick..."
 (create_memstick_image) >/dev/null 2>&1
-echo ">>> Creating serial memstick..."
-(create_memstick_serial_image) >/dev/null 2>&1
 
 # Check for zero sized files.  loader.conf is one of the culprits.
 check_for_zero_size_files
