@@ -1,7 +1,7 @@
 
 include         GENERIC
 options		KDB
-nooptions         KDB_TRACE 
+nooptions         KDB_TRACE
 options		DDB                     # Support DDB.
 nooptions         GDB                     # Support remote GDB.
 nooptions		INVARIANTS
@@ -213,3 +213,9 @@ options 	COMPAT_FREEBSD7
 device 		padlock
 
 options    PPS_SYNC
+
+# SMB support
+options		SMBFS           # SMB/CIFS filesystem
+options		NETSMB			# SMB/CIFS requester
+options		LIBMCHAIN		# mbuf management library
+options		LIBICONV

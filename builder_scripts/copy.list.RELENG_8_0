@@ -1,5 +1,6 @@
 usr/sbin/syslogd
 usr/sbin/clog
+usr/sbin/mount_smbfs
 lib/geom/geom_cache.so
 lib/geom/geom_mirror.so
 lib/geom/geom_shsec.so
