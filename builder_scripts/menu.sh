@@ -4,17 +4,17 @@
 #  Part of the pfSense project
 #  Copyright (C) 2009, 2010 Scott Ullrich <sullrich@gmail.com>
 #  All rights reserved.
-#  
+#
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted provided that the following conditions are met:
-#  
+#
 #  1. Redistributions of source code must retain the above copyright notice,
 #     this list of conditions and the following disclaimer.
-#  
+#
 #  2. Redistributions in binary form must reproduce the above copyright
 #     notice, this list of conditions and the following disclaimer in the
 #     documentation and/or other materials provided with the distribution.
-#  
+#
 #  THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 #  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 #  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -27,7 +27,7 @@
 #  POSSIBILITY OF SUCH DAMAGE.
 #
 # Crank up error reporting, debugging.
-#  set -e 
+#  set -e
 #  set -x
 
 DIALOG=${DIALOG=/usr/bin/dialog}
@@ -80,25 +80,25 @@ while [ /bin/true ]; do
 	fi
 	PATCH_FILE=`basename $PFSPATCHFILE`
 	TXT=""
-	if [ "$PFSENSETAG" != "" ]; then 
+	if [ "$PFSENSETAG" != "" ]; then
 		TXT="${TXT}       pfSense TAG: $PFSENSETAG\n"
 	fi
-	if [ "$FREEBSD_BRANCH" != "" ]; then 
+	if [ "$FREEBSD_BRANCH" != "" ]; then
 		TXT="${TXT}    FreeBSD Branch: $FREEBSD_BRANCH\n"
 	fi
-	if [ "$OVERRIDE_FREEBSD_CVSUP_HOST" != "" ]; then 
+	if [ "$OVERRIDE_FREEBSD_CVSUP_HOST" != "" ]; then
 		TXT="${TXT}      CVSUP Server: $OVERRIDE_FREEBSD_CVSUP_HOST\n"
 	fi
-	if [ "$TWITTER_USERNAME" != "" ]; then 
+	if [ "$TWITTER_USERNAME" != "" ]; then
 		TXT="${TXT}     Twitter UN/PW: $TWITTER_USERNAME / $TWITTER_PASSWORD\n"
 	fi
-	if [ "$FREESBIE_ERROR_MAIL" != "" ]; then 
+	if [ "$FREESBIE_ERROR_MAIL" != "" ]; then
 		TXT="${TXT}      Error E-Mail: $FREESBIE_ERROR_MAIL\n"
 	fi
-	if [ "$FREESBIE_COMPLETED_MAIL" != "" ]; then 
+	if [ "$FREESBIE_COMPLETED_MAIL" != "" ]; then
 		TXT="${TXT}  Completed E-Mail: $FREESBIE_COMPLETED_MAIL\n"
 	fi
-	if [ "$TXT" = "" ]; then 
+	if [ "$TXT" = "" ]; then
 		TXT="No options have been set.  Please run Set version first.\n"
 	fi
 	$DIALOG --clear --title "pfSense builder system <||> HostOS:`uname -r`" \
@@ -132,7 +132,7 @@ Choose the option you would like:" -1 -1 9 \
 		;;
 		"Clean")
 		clear
-		./clean_build.sh 
+		./clean_build.sh
 		;;
 		"Sync GIT")
 		clear

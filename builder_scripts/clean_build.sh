@@ -7,7 +7,7 @@
 # $Id$
 
 # Crank up error reporting, debugging.
-#set -e 
+#set -e
 #set -x
 
 # Suck in local vars

@@ -3,17 +3,17 @@
 #  set_version.sh
 #  Copyright (C) 2004-2010 Scott Ullrich
 #  All rights reserved.
-#  
+#
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted provided that the following conditions are met:
-#  
+#
 #  1. Redistributions of source code must retain the above copyright notice,
 #     this list of conditions and the following disclaimer.
-#  
+#
 #  2. Redistributions in binary form must reproduce the above copyright
 #     notice, this list of conditions and the following disclaimer in the
 #     documentation and/or other materials provided with the distribution.
-#  
+#
 #  THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 #  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 #  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -32,18 +32,18 @@ if [ $# -lt 1 ]; then
 fi
 
 # Default SUPHOST
-if [ "$2" != "" ]; then 
+if [ "$2" != "" ]; then
 	SUPHOST="$2"
-else 
+else
 	if [ -f /usr/local/bin/fastest_cvsup ]; then
 		echo "One moment please, finding the best cvsup server to use..."
 		SUPHOST=`fastest_cvsup -c tld -q`
-	else 
+	else
 		echo "WARNING:  Setting CVSUP host to cvsup.livebsd.org.  You must have firewall access for this to work on pfSense.org!"
 		echo
 		echo "You may install the fastest_cvsup port to automatically select a server: "
 		echo "          cd  /usr/ports/sysutils/fastest_cvsup && make install"
-		SUPHOST="cvsup.livebsd.org"	
+		SUPHOST="cvsup.livebsd.org"
 		sleep 2
 	fi
 fi
@@ -120,28 +120,28 @@ set_items() {
 	echo export PFSENSETAG="${PFSENSETAG}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	echo export PFSPATCHFILE="${PFSPATCHFILE}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	echo export PFSPATCHDIR="${PFSPATCHDIR}" >> $BUILDER_SCRIPTS/pfsense-build.conf
-	echo export SUPFILE="${SUPFILE}" >> $BUILDER_SCRIPTS/pfsense-build.conf		
-	echo export CUSTOM_COPY_LIST="${CUSTOM_COPY_LIST}" >> $BUILDER_SCRIPTS/pfsense-build.conf	
+	echo export SUPFILE="${SUPFILE}" >> $BUILDER_SCRIPTS/pfsense-build.conf
+	echo export CUSTOM_COPY_LIST="${CUSTOM_COPY_LIST}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	echo "# Comment out the following line if you would like to automatically select an update server." >> $BUILDER_SCRIPTS/pfsense-build.conf
 	echo export OVERRIDE_FREEBSD_CVSUP_HOST="${SUPHOST}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	echo export BASE_DIR="${BASE_DIR}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	echo export BUILDER_TOOLS="${BUILDER_TOOLS}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	echo export BUILDER_SCRIPTS="${BUILDER_SCRIPTS}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	echo export EXTRA_DEVICES="${EXTRA_DEVICES}" >> $BUILDER_SCRIPTS/pfsense-build.conf
-	if [ "$FREESBIE_ERROR_MAIL" != "" ]; then 
-		echo "export FREESBIE_ERROR_MAIL=${FREESBIE_ERROR_MAIL}" >> $BUILDER_SCRIPTS/pfsense-build.conf		
+	if [ "$FREESBIE_ERROR_MAIL" != "" ]; then
+		echo "export FREESBIE_ERROR_MAIL=${FREESBIE_ERROR_MAIL}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	fi
-	if [ "$FREESBIE_COMPLETED_MAIL" != "" ]; then 
-		echo "export FREESBIE_COMPLETED_MAIL=${FREESBIE_COMPLETED_MAIL}" >> $BUILDER_SCRIPTS/pfsense-build.conf		
+	if [ "$FREESBIE_COMPLETED_MAIL" != "" ]; then
+		echo "export FREESBIE_COMPLETED_MAIL=${FREESBIE_COMPLETED_MAIL}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	fi
-	if [ "$PFSPORTSFILE" != "" ]; then 
-		echo "export PFSPORTSFILE=${PFSPORTSFILE}" >> $BUILDER_SCRIPTS/pfsense-build.conf		
+	if [ "$PFSPORTSFILE" != "" ]; then
+		echo "export PFSPORTSFILE=${PFSPORTSFILE}" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	fi
-	if [ "$TWITTER_USERNAME" != "" ]; then 
-		echo "export TWITTER_USERNAME=${TWITTER_USERNAME}" >> $BUILDER_SCRIPTS/pfsense-build.conf		
-		echo "export TWITTER_PASSWORD=${TWITTER_PASSWORD}" >> $BUILDER_SCRIPTS/pfsense-build.conf		
-	fi	
-	if [ "$REMOVE_PHP" != "" ]; then 
+	if [ "$TWITTER_USERNAME" != "" ]; then
+		echo "export TWITTER_USERNAME=${TWITTER_USERNAME}" >> $BUILDER_SCRIPTS/pfsense-build.conf
+		echo "export TWITTER_PASSWORD=${TWITTER_PASSWORD}" >> $BUILDER_SCRIPTS/pfsense-build.conf
+	fi
+	if [ "$REMOVE_PHP" != "" ]; then
 		echo "export REMOVE_PHP=true" >> $BUILDER_SCRIPTS/pfsense-build.conf
 	fi
 	UNAME=`uname -m`
@@ -185,7 +185,7 @@ RELENG_8_1)
 	export PFSENSETAG=RELENG_2_0
 	export PFSPATCHDIR=${BUILDER_TOOLS}/patches/RELENG_8_1
 	export PFSPATCHFILE=${BUILDER_TOOLS}/builder_scripts/patches.RELENG_8_1
-	export CUSTOM_COPY_LIST="${BUILDER_TOOLS}/builder_scripts/copy.list.RELENG_8_0"	
+	export CUSTOM_COPY_LIST="${BUILDER_TOOLS}/builder_scripts/copy.list.RELENG_8_0"
 	export PFSPORTSFILE=buildports.RELENG_2_0
 	export EXTRA_DEVICES=${EXTRA_DEVICES:-"siba_bwn,bwn,run"}
 	set_items
@@ -193,6 +193,6 @@ RELENG_8_1)
 
 esac
 
-if [ "$HANDLED" = "false" ]; then 
+if [ "$HANDLED" = "false" ]; then
 	echo "Invalid verison."
 fi

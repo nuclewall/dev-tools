@@ -13,17 +13,17 @@
 #  Copyright (c) 2005 Dario Freni
 #  and copied from FreeSBIE project
 #  All rights reserved.
-#  
+#
 #  Redistribution and use in source and binary forms, with or without
 #  modification, are permitted provided that the following conditions are met:
-#  
+#
 #  1. Redistributions of source code must retain the above copyright notice,
 #     this list of conditions and the following disclaimer.
-#  
+#
 #  2. Redistributions in binary form must reproduce the above copyright
 #     notice, this list of conditions and the following disclaimer in the
 #     documentation and/or other materials provided with the distribution.
-#  
+#
 #  THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,
 #  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
 #  AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
@@ -72,7 +72,7 @@ handle_tools_stats_crypto() {
 	echo -n ">>> Building athstats..."
 	cd $SRCDIR/tools/tools/ath/athstats
 	(make clean && make && make install) | egrep -wi '(^>>>|error)'
-	echo "Done!" 	
+	echo "Done!"
 	echo -n ">>> Building tools/crytpo..."
 	cd $SRCDIR/tools/tools/crypto/
 	(make clean && make && make install) | egrep -wi '(^>>>|error)'
@@ -460,20 +460,20 @@ build_all_kernels() {
 	# Nuke old kernel if it exists
 	find $KERNEL_BUILD_PATH -name kernel.old -exec rm -rf {} \; 2>/dev/null
 	echo "done."
-	
+
 	echo beastie_disable=\"YES\" >> $KERNEL_BUILD_PATH/SMP/boot/loader.conf
 	echo autoboot_delay=\"0\" >> $KERNEL_BUILD_PATH/SMP/boot/loader.conf
 	echo vm.kmem_size=\"435544320\"  >> $KERNEL_BUILD_PATH/SMP/boot/loader.conf
 	echo vm.kmem_size_max=\"535544320\"  >> $KERNEL_BUILD_PATH/SMP/boot/loader.conf
 	echo kern.ipc.nmbclusters=\"32768\" >> $KERNEL_BUILD_PATH/SMP/boot/loader.conf
-	
+
 	(cd $KERNEL_BUILD_PATH/SMP/boot/ && tar czf $PFSENSEBASEDIR/kernels/kernel_SMP.gz .)
 	echo -n "."
 	chflags -R noschg $PFSENSEBASEDIR/boot/
 	echo -n "."
 	(cd $PFSENSEBASEDIR/boot/ && tar xzf $PFSENSEBASEDIR/kernels/kernel_SMP.gz -C $PFSENSEBASEDIR/boot/)
 	echo ".done"
-	
+
 }
 
 # This routine rebuilds all pfPorts files which are generally
@@ -647,7 +647,7 @@ cust_overlay_host_binaries() {
 	#    	install $SRCDIR/usr.sbin/clog/clog $PFSENSEBASEDIR/usr/sbin/
 	#	fi
 	#fi
-	
+
 	install /usr/sbin/syslogd $PFSENSEBASEDIR/usr/sbin/
 	install /usr/sbin/clog $PFSENSEBASEDIR/usr/sbin/
 
@@ -677,7 +677,7 @@ cust_overlay_host_binaries() {
 			FILETYPE=`file /$TEMPFILE | egrep "(dynamically|shared)" | wc -l | awk '{ print $1 }'`
 			if [ "$FILETYPE" -gt 0 ]; then
 				NEEDLIB=`ldd /${TEMPFILE} | grep "=>" | awk '{ print $3 }'`
-				NEEDEDLIBS="$NEEDEDLIBS $NEEDLIB" 
+				NEEDEDLIBS="$NEEDEDLIBS $NEEDLIB"
 				mkdir -p `dirname ${PFSENSEBASEDIR}/${TEMPFILE}`
 				cp /${TEMPFILE} ${PFSENSEBASEDIR}/${TEMPFILE}
 				chmod a+rx ${PFSENSEBASEDIR}/${TEMPFILE}
@@ -699,7 +699,7 @@ cust_overlay_host_binaries() {
 					NEEDEDLIBS="$NEEDEDLIBS `ldd ${CVS_CO_DIR}/${TEMPFILE} | grep "=>" | awk '{ print $3 }'`"
 				fi
 			else
-				echo "Could not locate $TEMPFILE" >> /tmp/pfPort/copy.list				
+				echo "Could not locate $TEMPFILE" >> /tmp/pfPort/copy.list
 			fi
 		fi
 	done
@@ -711,12 +711,12 @@ cust_overlay_host_binaries() {
 		if [ -f $NEEDLIB ]; then
 			install $NEEDLIB ${PFSENSEBASEDIR}${NEEDLIB}
 			if [ -d "${CLONEDIR}" ]; then
-				install $NEEDLIB ${CLONEDIR}${NEEDLIB} 2>/dev/null 
+				install $NEEDLIB ${CLONEDIR}${NEEDLIB} 2>/dev/null
 			fi
 		fi
 	done
 	#unset DONTSTRIP
-    
+
 	echo ">>> Deleting files listed in ${PRUNE_LIST}"
     (cd ${PFSENSEBASEDIR} && sed 's/^#.*//g' ${PRUNE_LIST} | xargs rm -rvf > /dev/null 2>&1)
 }
@@ -800,7 +800,7 @@ cust_populate_installer_bits() {
 	cp $BUILDER_TOOLS/lua_installer $PFSENSEBASEDIR/scripts/lua_installer
 	cp $BUILDER_TOOLS/freebsd_installer $PFSENSEBASEDIR/scripts/
 	cp $BUILDER_TOOLS/lua_installer_full $PFSENSEBASEDIR/scripts/
-	
+
 	chmod a+rx $PFSENSEBASEDIR/scripts/*
 	mkdir -p $PFSENSEBASEDIR/usr/local/bin/
 	cp $BUILDER_TOOLS/after_installation_routines.sh \
@@ -863,7 +863,7 @@ cust_populate_extra() {
 	# Setup login environment
 	echo > $CVS_CO_DIR/root/.shrc
 
-	
+
 	echo	"if [ \`env | grep cons25 | wc -l\` -gt 0 ]; then" > $CVS_CO_DIR/root/.shrc
 	echo	"	/etc/rc.initial" >> $CVS_CO_DIR/root/.shrc
 	echo	"	exit" >> $CVS_CO_DIR/root/.shrc
@@ -1131,7 +1131,7 @@ setup_serial_hints() {
 	echo 'hint.uart.0.at="isa"' >> $PFSENSEBASEDIR/boot/device.hints
 	echo 'hint.uart.0.port="0x3F8"' >> $PFSENSEBASEDIR/boot/device.hints
 	echo 'hint.uart.0.flags="0x10"' >> $PFSENSEBASEDIR/boot/device.hints
-	echo 'hint.uart.0.irq="4"' >> $PFSENSEBASEDIR/boot/device.hints	
+	echo 'hint.uart.0.irq="4"' >> $PFSENSEBASEDIR/boot/device.hints
 }
 
 # Items that need to be fixed up that are
@@ -1139,7 +1139,7 @@ setup_serial_hints() {
 cust_fixup_nanobsd() {
 
 	FBSD_VERSION=`/usr/bin/uname -r | /usr/bin/cut -d"." -f1`
-	
+
 	echo ">>> Fixing up NanoBSD Specific items..."
 	[ -z "${NANO_WITH_VGA}" ] \
 		&& cp $CVS_CO_DIR/boot/loader.conf_wrap $PFSENSEBASEDIR/boot/loader.conf
@@ -1189,7 +1189,7 @@ cust_fixup_nanobsd() {
 		# Empty file to identify nanobsd_vga images
 		touch ${PFSENSEBASEDIR}/etc/nano_use_vga.txt
 	fi
-	
+
 	setup_tcshrc_prompt
 
 }
@@ -1357,7 +1357,7 @@ test_php_install() {
 		cp /tmp/php.ini $PFSENSEBASEDIR/usr/local/lib/php.ini
 		cp /tmp/php.ini $PFSENSEBASEDIR/usr/local/etc/php.ini
 	fi
-	
+
 	rm $PFSENSEBASEDIR/test_php.php
 
 }
@@ -1425,7 +1425,7 @@ create_pfSense_Embedded_update_tarball() {
 	mv ${PFSENSEBASEDIR}/kernels/kernel_wrap.gz ${PFSENSEBASEDIR}/boot/kernel/kernel.gz
 	rm -rf ${PFSENSEBASEDIR}/kernels/*
 	rm -rf ${PFSENSEBASEDIR}/etc/bogons
-	
+
 	echo ; echo Creating ${UPDATESDIR}/${FILENAME} ...
 	cd ${PFSENSEBASEDIR} && tar czPf ${UPDATESDIR}/${FILENAME} .
 
@@ -1695,7 +1695,7 @@ print_flags() {
 	printf "                    CVS User: %s\n" $CVS_USER
 	printf "                   Verbosity: %s\n" $BE_VERBOSE
 	printf "                    BASE_DIR: %s\n" $BASE_DIR
-	printf "                     BASEDIR: %s\n" $BASEDIR	
+	printf "                     BASEDIR: %s\n" $BASEDIR
 	printf "                Checkout dir: %s\n" $CVS_CO_DIR
 	printf "                 Custom root: %s\n" $CUSTOMROOT
 	printf "              CVS IP address: %s\n" $CVS_IP
@@ -1731,7 +1731,7 @@ print_flags() {
 	printf "                     OVFVMDK: %s\n" $OVFVMDK
 	printf "                  OVFSTRINGS: %s\n" $OVFSTRINGS
 	printf "                       OVFMF: %s\n" $OVFMF
-	printf "                     OVFCERT: %s\n" $OVFCERT 
+	printf "                     OVFCERT: %s\n" $OVFCERT
 if [ -n "$PFSENSECVSDATETIME" ]; then
 	printf "              pfSense TSTAMP: %s\n" "-D \"$PFSENSECVSDATETIME\""
 fi
@@ -1747,7 +1747,7 @@ if [ -n "$SHOW_ENV" ]; then
 	done
 fi
 	echo
-	
+
 }
 
 # Backs up pfSense repo
@@ -2523,19 +2523,19 @@ awk '
 	fi
 	if [ "$IMGUPDATESIZE" -lt "$CHECKSIZE" ]; then
 		echo ">>> Something went wrong when building NanoBSD upgrade image.  The image size is under 20 megabytes!"
-		print_error_pfS	
+		print_error_pfS
 	fi
 }
 
 # This routine creates a ova image that contains
-# a ovf and vmdk file. These files can be imported 
+# a ovf and vmdk file. These files can be imported
 # right into vmware or virtual box.
 # (and many other emulation platforms)
 # http://www.vmware.com/pdf/ovf_whitepaper_specification.pdf
 create_ova_image() {
 	# XXX create a .ovf php creator that you can pass:
 	#     1. populatedSize
-	#     2. license 
+	#     2. license
 	#     3. product name
 	#     4. version
 	#     5. number of network interface cards
@@ -2578,7 +2578,7 @@ ova_repack_vbox_image() {
 	echo ">>> Setting POPULATEDSIZEBYTES to ${POPULATEDSIZEBYTES}..."
 	#  OperatingSystemSection (pfSense.ovf)
 	#  42   FreeBSD 32-Bit
-	#  78   FreeBSD 64-Bit 
+	#  78   FreeBSD 64-Bit
 	if [ "$BUILDPLATFORM" = "i386" ]; then
 		file_search_replace '"101"' '"42"' ${OVFPATH}/${PRODUCT_NAME}.ovf
 	fi
@@ -2612,7 +2612,7 @@ ova_umount_mnt() {
 ova_umount_mdconfig() {
 	MD=$1
 	# Show gpart info
-	gpart show $MD	
+	gpart show $MD
 	echo ">>> Unmounting ${MD}..."
 	mdconfig -d -u $MD
 	sync ; sync
@@ -2630,7 +2630,7 @@ ova_setup_ovf_file() {
 	if [ -f ${OVFFILE} ]; then
 		cp ${OVFFILE} ${OVFPATH}/${PRODUCT_NAME}.ovf
 	fi
-		
+
 	if [ ! -f ${OVFPATH}/${PRODUCT_NAME}.ovf ]; then
 		cp ${BUILDER_SCRIPTS}/pfSense.ovf ${OVFPATH}/${PRODUCT_NAME}.ovf
 		file_search_replace PFSENSE_VERSION $PFSENSE_VERSION ${OVFPATH}/${PRODUCT_NAME}.ovf
@@ -2643,7 +2643,7 @@ ova_prereq_check() {
 		if [ ! -d /usr/ports ]; then
 			echo ">>> /usr/ports does not exist, fetching..."
 			portsnap fetch extract
-		fi		
+		fi
 		BUILDPLATFORM=`uname -p`
 		if [ "$BUILDPLATFORM" = "amd64" ]; then
 			if [ ! -d /usr/lib32 ]; then
@@ -2687,7 +2687,7 @@ alias clean_build.sh 'cd /home/pfsense/tools/builder_scripts && ./clean_build.sh
 alias build_nano.sh 'cd /home/pfsense/tools/builder_scripts && ./build_nano.sh'
 alias apply_kernel_patches.sh 'cd /home/pfsense/tools/builder_scripts && ./apply_kernel_patches.sh'
 EOF
-	
+
 }
 
 disable_lan_disable_dhcpd_enable_sshd() {
@@ -2770,7 +2770,7 @@ ova_create_raw_backed_file() {
 # called from create_ova_image
 ova_remove_old_tmp_files() {
 	rm ${OVFPATH}/*.ovf.final 2>/dev/null
-	rm ${OVFPATH}/*.ova 2>/dev/null	
+	rm ${OVFPATH}/*.ova 2>/dev/null
 }
 
 # called from create_ova_image
@@ -2792,7 +2792,7 @@ ova_create_vbox_image() {
 
 # called from create_ova_image
 ova_cpdup_files() {
-	echo ">>> Populating vmdk staging area..."	
+	echo ">>> Populating vmdk staging area..."
 	cpdup -o ${PFSENSEBASEDIR}/COPYRIGHT /mnt/COPYRIGHT
 	cpdup -o ${PFSENSEBASEDIR}/boot /mnt/boot
 	cpdup -o ${PFSENSEBASEDIR}/bin /mnt/bin
@@ -2889,8 +2889,8 @@ EOF
 ova_invoke_pc_sysinstaller() {
 	echo ">>> Invoking pc-sysinstall with -c /tmp/pcsysinstall.conf..."
 	/usr/sbin/pc-sysinstall/pc-sysinstall/pc-sysinstall.sh -c /tmp/pcsysinstall.conf
-	if [ "$?" != "0" ]; then 
-		print_error_pfS	
+	if [ "$?" != "0" ]; then
+		print_error_pfS
 	fi
 }
 
@@ -3319,7 +3319,7 @@ update_freebsd_sources_and_apply_patches() {
 		MOVE_FILE_LEN=`echo $MOVE_FILE | wc -c`
 		IS_TGZ=`echo $LINE | grep -v grep | grep .tgz | wc -l`
 		if [ ${PATH_FILE} == ""]; then
-			
+
 		elif [ ! -f "${PFSPATCHDIR}/${PATCH_FILE}" ]; then
 			echo
 			echo "ERROR!  Patch file(${PATCH_FILE}) not found!  Please fix before building!"
@@ -3635,7 +3635,7 @@ install_pkg_install_ports_build() {
 				echo ">>> Port ${EXTRAPORT}($_BUILT_PKGNAME) as build dependency of ($PORTNAME)...already installed...skipping."
                         fi
                 done
-                        
+
                 # Package up what's needed to execute and run
                 for EXTRAPORT in `cd $PORTDIRPFSA && make run-depends-list | sort | uniq | xargs /bin/echo -n `; do
                         _PORTNAME="`basename $EXTRAPORT`"

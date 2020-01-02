@@ -6,7 +6,7 @@ PREVIOUSDIR=`pwd`
 
 mkdir -p $BUILDER_TOOLS/builder_scripts/conf
 
-cd $BASE_DIR/installer/scripts/build 
+cd $BASE_DIR/installer/scripts/build
 
 # Backup old make.conf
 if [ -f /etc/make.conf ]; then

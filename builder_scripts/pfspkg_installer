@@ -89,7 +89,7 @@ if(!function_exists("download_file_with_progress_bar")) {
 
 if(!function_exists("update_status")) {
 	function update_status($status) {
-			echo ">>>{$status}\n";	        
+			echo ">>>{$status}\n";
 	}
 }
 
@@ -142,24 +142,24 @@ function read() {
 function genPackageList() {
 	global $pkg_info, $g;
 
-	// borrowed from pkg_mgr_install.php	
+	// borrowed from pkg_mgr_install.php
 	$pkg_info = get_pkg_info('all', array('name', 'category', 'website', 'version', 'status', 'descr', 'maintainer', 'required_version'));
 	// get package names
 	$pkgListA = array_keys($pkg_info);
 	// turn names array into a string of comma separated values
 	$pkgList = implode(", ", $pkgListA);
-	
+
 	print("Available packages:\n");
 	print("==================================\n");
 	print("{$pkgList}\n\n");
 	print("==================================\n");
-	
-	// get the list of packages that should be installed from stdin	
+
+	// get the list of packages that should be installed from stdin
 	print("Please provide a comma separated list of packages that should be added to the {$g['product_name']} installable image:\n");
 	// turns the list provided by the user into an array of package names
 	$userPkgList = explode(",", read());
 	$saneUserPkgList = array();
-	
+
 	// try to figure out whether the user provided package names are correct
 	foreach ($userPkgList as $package) {
 		if(! in_array(trim($package), $pkgListA)) {
@@ -169,14 +169,14 @@ function genPackageList() {
 		}
 	}
 
-	// finally dump the sane list of package names to a file	
+	// finally dump the sane list of package names to a file
 	file_put_contents("/tmp/pkgfile.lst", implode(", ", $saneUserPkgList));
 }
 
 // iterate over the cmd line arguments
 for ($i = 0; $i < count($argv); $i++) {
 	$argument = $argv[$i];
-	
+
 	if ($argument == "-i") {
 		$beInteractive = true;
 	} else if ($argument == "-p") {
@@ -201,13 +201,13 @@ print("Custom {$g['product_name']} package installer runs in ${mode} mode.\n");
 // setup package list file interactively
 if (! file_exists($listFile) && $mode == "config") {
 	genPackageList();
-	
+
 // package list file already exists
 } else if (file_exists($listFile) && $mode == "config") {
 	// try to figure out whether the file contains valide contents
 	$fileContents = str_replace(' ', '', file_get_contents($listFile));
 	$myArray = explode(",", $fileContents);
-	
+
 	if (is_array($myArray) && count($myArray) == 0) {
 		// empty array
 		genPackageList();
@@ -221,28 +221,28 @@ if (! file_exists($listFile) && $mode == "config") {
 
 // install the actual packages using the list file
 if (file_exists($listFile) && $mode == "install") {
-	
+
 	// load list of packages
 	$pkgList = str_replace(' ', '', file_get_contents($listFile));
 	// turn list of package names into an array
 	$pkgListA = explode(",", $pkgList);
-	
+
 	print("Found " . count($pkgListA) . " valid packages within package list file.\n");
-	
+
 	// iterate over each list element and install the appropriate package
 	foreach ($pkgListA as $pkg) {
 		$package = trim($pkg);
 		print("Currently installed packages before {$package}: " . count($config["installedpackages"]["package"]) . "\n");
-		
+
 		echo ">>> Invoking installer for $package ...\n";
 		$status = install_package($package, $pkg_info);
-		
+
 		if($status == -1) {
 			print("\nInstallation of {$package} FAILED!\n");
 		} else {
 			print("\nInstallation of {$package} completed.\n");
 		}
-		
+
 		print("Currently installed packages after {$package}: " . count($config["installedpackages"]["package"]) . "\n");
 	}
 

@@ -3,7 +3,7 @@
 
 /*
      This script will chroot via the builder system to test
-     the local php setup.  If we can perform a series of 
+     the local php setup.  If we can perform a series of
      small tests to ensure the php environment is sane.
 */
 
