@@ -25,7 +25,7 @@
 #   POSSIBILITY OF SUCH DAMAGE.
 
 echo
-echo "NUCLEWALL kurulumu baþlatýlýyor..."
+echo "NUCLEWALL installation starting..."
 echo
 
 # Ensure install-session.sh exists where the installtion was recorded to
@@ -45,8 +45,7 @@ fi
 # Check if host is running on VMware
 if [ -f /var/log/dmesg.boot ]; then
 	if [ `cat /var/log/dmesg.boot | /usr/bin/grep VMware | /usr/bin/wc -l` -gt 0 ]; then
-		echo -n "VMware sanal makinesi tespit edildi. Gerekli ayarlamalar yapýlýyor..."
-	        touch /var/IS_VMWARE
+	    touch /var/IS_VMWARE
 		sleep 1
 		echo -n "."
 		sleep 1
@@ -62,7 +61,7 @@ if [ -f /var/log/dmesg.boot ]; then
 	fi
 fi
 
-echo "Lütfen bekleyin..."
+echo "Please wait..."
 echo
 
 echo -n "LUA_CPATH='/usr/local/lib/lua/5.0/?.so' exec /usr/local/bin/lua50 -l/usr/local/share/lua/5.0/compat-5.1.lua " > /tmp/lua50c51
@@ -85,7 +84,7 @@ sleep 1
 #/sbin/conscontrol mute off >/dev/null 2>&1
 
 if [ ! -f /tmp/install_complete ]; then
-	echo Kurulum baþarýyla tamamlanamadý.
+	echo Successfully installed.
 	exit
 fi
 
@@ -96,7 +95,7 @@ clear
 echo
 echo
 echo
-echo NUCLEWALL þimdi yeniden baþlatýlýyor...
+echo NUCLEWALL is now rebooting...
 echo
 echo
 echo
