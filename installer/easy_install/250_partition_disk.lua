@@ -188,7 +188,7 @@ local align_to_boundary = function(dd, size, num, start)
 	local is_divisible_by = function(x, y)
 		return math.floor(x / y) == math.ceil(x / y)
 	end
-			
+
 	--
 	-- Get "sectors per track" value - the start sector
 	-- should be divisible by this value in order
@@ -307,7 +307,7 @@ local align_to_disk_size = function(dd, size, num, used_size, disk_size, is_last
 			num, under,
 			Storage.Capacity.new(under, "S"):format()
 		    ),
-	
+
 		    actions = {
 			{
 			    id = "ok",
@@ -434,7 +434,7 @@ local check_datasets = function(dd, datasets_list)
 			if not size then
 				return false
 			end
-			
+
 			dataset.sectors = tostring(size)
 
 			used_size = used_size + size

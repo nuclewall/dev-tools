@@ -27,7 +27,7 @@ return {
 
 	local fillout_missing_expert_values = function()
 		local i, dataset
-	
+
 		for i, dataset in ipairs(datasets_list) do
 			if not dataset.softupdates and
 			   not dataset.fsize and not dataset.bsize then
@@ -36,7 +36,7 @@ return {
 				else
 					dataset.softupdates = "Y"
 				end
-	
+
 				if dataset.capstring == "*" or
 				   (Storage.Capacity.is_valid_capstring(dataset.capstring) and
 				    Storage.Capacity.new(dataset.capstring):in_units("G") >= 1.0) then
@@ -95,7 +95,7 @@ return {
 				end
 			end
 		end
-	
+
 		if used_size > part_size then
 			if not App.ui:confirm(_(
 			    "WARNING: The total number of sectors needed "	..
@@ -112,7 +112,7 @@ return {
 				return false
 			end
 		end
-	
+
 		if used_size < part_size - App.conf.limits.waste_max then
 			if not App.ui:confirm(_(
 			    "Note: the total capacity required "	..
@@ -131,11 +131,11 @@ return {
 				return false
 			end
 		end
-	
+
 		if App.conf.enable_crashdumps then
 			local num_swap_subparts = 0
 			local num_dumponable = 0
-	
+
 			for spd in pd:get_subparts() do
 				if spd:is_swap() then
 					num_swap_subparts = num_swap_subparts + 1
@@ -179,9 +179,9 @@ return {
 		local offset, fstype
 		local total_size = 0
 		local wildcard_size = false
-	
+
 		pd:clear_subparts()
-	
+
 		offset = 0
 		for i, dataset in list do
 			if dataset.capstring == "*" then
@@ -195,7 +195,7 @@ return {
 				wildcard_size = true
 			else
 				if Storage.Capacity.is_valid_capstring(dataset.capstring) then
-					total_size = total_size + 
+					total_size = total_size +
 					    Storage.Capacity.new(dataset.capstring):in_units("S")
 				else
 					App.ui:inform(_(
@@ -241,13 +241,13 @@ return {
 				-- This has already been determined to be valid
 				size = Storage.Capacity.new(dataset.capstring):in_units("S")
 			end
-	
+
 			if dataset.mountpoint == "swap" then
 				fstype = "swap"
 			else
 				fstype = "4.2BSD"
 			end
-	
+
 			pd:add_subpart(Storage.Subpartition.new{
 			    parent = pd,
 			    letter = letter,
@@ -258,10 +258,10 @@ return {
 			    bsize  = tonumber(dataset.bsize),
 			    mountpoint = dataset.mountpoint
 			})
-	
+
 			offset = offset + size
 		end
-	
+
 		return validate_subpart_descriptors(pd)
 	end
 

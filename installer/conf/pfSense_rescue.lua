@@ -60,13 +60,13 @@ install_items = {
 }
 
 ui_nav_control = {
-	["*/configure/*"] = "ignore",          	     		
+	["*/configure/*"] = "ignore",
 	["*/pit/configure_console"] = "ignore",   	 		-- do not ask about console
 	["pre_install_tasks/select_language"] = "ignore",               -- do not show language selection
 	["pre_install_tasks/configure_network"] = "ignore", 		-- no need for configuring network
-	["main/install_os"] = "ignore",          	     		
-	["/install/*"] = "ignore",           	     		
-	["*/welcome"] = "ignore",           	     		
+	["main/install_os"] = "ignore",
+	["/install/*"] = "ignore",
+	["*/welcome"] = "ignore",
 	["*/configure_installed_system"] = "ignore", 			-- don't put these on
 	["*/upgrade_installed_system"] = "ignore",   			-- the main menu...
 	["*/load_kernel_modules"] = "ignore", 		 			-- do not ask about loading kernel modules

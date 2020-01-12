@@ -127,9 +127,9 @@ use_cpdup = true
 
 booted_from_install_media = true
 
-dir = { 
-	root = "/", 
-	tmp = "/tmp/" 
+dir = {
+	root = "/",
+	tmp = "/tmp/"
 }
 
 --

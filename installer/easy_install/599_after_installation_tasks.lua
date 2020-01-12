@@ -15,7 +15,7 @@ return {
 	local cmds = CmdChain.new()
 	local filename = "/usr/local/bin/after_installation_routines.sh"
 	local line
-        
+
 	for line in io.lines(filename) do
 		cmds:set_replacements{
 		    line = line,
@@ -27,7 +27,7 @@ return {
 	end
 
 	cmds:execute()
-	
+
 	return step:next()
 
     end

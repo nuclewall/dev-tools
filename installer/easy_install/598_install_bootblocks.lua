@@ -35,7 +35,7 @@ return {
 				dataset.packet = "Y"
 			end
 			if raw_name == App.state.sel_disk:get_name() then
-				table.insert(datasets_list, dataset)		
+				table.insert(datasets_list, dataset)
 			end
 		end
 

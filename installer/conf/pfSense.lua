@@ -7,7 +7,7 @@
 
 product = {
 	name = "nuclewall",
-	version = "1.0"
+	version = "0.9.3"
 }
 
 mountpoints = function(part_cap, ram_cap)
@@ -49,7 +49,7 @@ install_items = {
         "conf.default",
         "dev",
         "etc",
-	"home", 
+	"home",
 	"kernels",
         "libexec",
         "lib",
