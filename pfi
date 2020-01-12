@@ -130,7 +130,7 @@ look_for_pfi_config_cd9660()
 			get_authorized_hosts
 			if get_pfi_config /tmp/mnt /dev/$try_device; then
 				umount /tmp/mnt
-				echo -n "[found]" 
+				echo -n "[found]"
 				return 0
 			fi
 			umount /tmp/mnt
