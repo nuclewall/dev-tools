@@ -3883,8 +3883,7 @@ launch() {
 
 }
 
-remove_squid_and_freeradius_config() {
-    chroot $PFSENSEBASEDIR /bin/rm -rf /usr/local/etc/squid
+remove_default_freeradius_config() {
 	chroot $PFSENSEBASEDIR /bin/rm -rf /usr/local/etc/raddb
 	chroot $PFSENSEBASEDIR /bin/rm -f /usr/local/share/freeradius/dictionary.mikrotik
 	chroot $PFSENSEBASEDIR /bin/rm -f /usr/local/share/freeradius/dictionary.chillispot

@@ -127,15 +127,13 @@ fi
 
 rm -f $PFSPKGFILE
 (pkg_info | grep bsdinstaller) > $PFSPKGFILE
-#(pkg_info | grep git) >> $PFSPKGFILE
 (pkg_info | grep libxml) >> $PFSPKGFILE
 (pkg_info | grep mysql-server) >> $PFSPKGFILE
-(pkg_info | grep squid-) >> $PFSPKGFILE
-(pkg_info | grep squidGuard) >> $PFSPKGFILE
 (pkg_info | grep freeradius) >> $PFSPKGFILE
 (pkg_info | grep firebird) >> $PFSPKGFILE
-#(pkg_info | grep samba36-smbclient) >> $PFSPKGFILE
 (pkg_info | grep curl-) >> $PFSPKGFILE
+#(pkg_info | grep samba36-smbclient) >> $PFSPKGFILE
+#(pkg_info | grep git) >> $PFSPKGFILE
 
 set -e
 
@@ -154,7 +152,7 @@ freesbie_make pkginstall
 
 unset PKGFILE
 
-remove_squid_and_freeradius_config
+remove_default_freeradius_config
 
 # Add extra files such as buildtime of version, bsnmpd, etc.
 echo ">>> Phase populate_extra..."
